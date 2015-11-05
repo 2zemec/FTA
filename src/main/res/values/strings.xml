@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">MJoy Radio</string>
+
+    <string name="title_section1">RZK</string>
+    <string name="title_section2">Urban space radio</string>
+    <string name="title_section3">Radio greatest song</string>
+
+    <string name="radio1">radio-z-kryjivky</string>
+    <string name="radio2">urban-space-radio</string>
+    <string name="radio3">radio-great</string>
+
+    <string name="radioS1">http://mjoy.ua/radio/station/rzk/playlist.json</string>
+    <string name="radioS2">http://mjoy.ua/radio/station/urban-space-radio/playlist.json</string>
+    <string name="radioS3">http://mjoy.ua/radio/station/radio-great/playlist.json</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+
+    <string name="action_settings">Settings</string>
+</resources>
