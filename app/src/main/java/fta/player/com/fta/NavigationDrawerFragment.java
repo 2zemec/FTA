@@ -1,5 +1,8 @@
 package fta.player.com.fta;
 
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -24,7 +27,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import fta.player.com.fta.fragments.ChristmasFragment;
+import fta.player.com.fta.fragments.EgoFragment;
+import fta.player.com.fta.fragments.GreatestSongFragment;
+import fta.player.com.fta.fragments.KredensCafeFragment;
+import fta.player.com.fta.fragments.LiveMFragment;
+import fta.player.com.fta.fragments.MousseFragment;
 import fta.player.com.fta.fragments.RZKFragment;
+import fta.player.com.fta.fragments.RadioMFragment;
 import fta.player.com.fta.fragments.UrbanFragment;
 
 /**
@@ -112,6 +122,12 @@ public class NavigationDrawerFragment extends Fragment {
                         getString(R.string.title_section1),
                         getString(R.string.title_section2),
                         getString(R.string.title_section3),
+                        getString(R.string.title_section4),
+                        getString(R.string.title_section5),
+                        getString(R.string.title_section6),
+                        getString(R.string.title_section7),
+                        getString(R.string.title_section8),
+                        getString(R.string.title_section9),
                 }));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
@@ -221,6 +237,48 @@ public class NavigationDrawerFragment extends Fragment {
             case 1: {
                 ft.replace(R.id.frame_container, new UrbanFragment()).commit();
                 title = getString(R.string.title_section2);
+                break;
+            }
+
+            case 2: {
+                ft.replace(R.id.frame_container, new GreatestSongFragment()).commit();
+                title = getString(R.string.title_section3);
+                break;
+            }
+
+            case 3: {
+                ft.replace(R.id.frame_container, new MousseFragment()).commit();
+                title = getString(R.string.title_section4);
+                break;
+            }
+
+            case 4: {
+                ft.replace(R.id.frame_container, new LiveMFragment()).commit();
+                title = getString(R.string.title_section5);
+                break;
+            }
+
+            case 5: {
+                ft.replace(R.id.frame_container, new RadioMFragment()).commit();
+                title = getString(R.string.title_section6);
+                break;
+            }
+
+            case 6: {
+                ft.replace(R.id.frame_container, new EgoFragment()).commit();
+                title = getString(R.string.title_section7);
+                break;
+            }
+
+            case 7: {
+                ft.replace(R.id.frame_container, new ChristmasFragment()).commit();
+                title = getString(R.string.title_section8);
+                break;
+            }
+
+            case 8: {
+                ft.replace(R.id.frame_container, new KredensCafeFragment()).commit();
+                title = getString(R.string.title_section9);
                 break;
             }
 

@@ -116,6 +116,48 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
                 stopPlaying();
                 break;
             }
+            case 4: {
+                mTitle = getString(R.string.title_section4);
+                ds = getString(R.string.radio4);
+                listSource = getString(R.string.radioS4);
+                stopPlaying();
+                break;
+            }
+            case 5: {
+                mTitle = getString(R.string.title_section5);
+                ds = getString(R.string.radio5);
+                listSource = getString(R.string.radioS5);
+                stopPlaying();
+                break;
+            }
+            case 6: {
+                mTitle = getString(R.string.title_section6);
+                ds = getString(R.string.radio6);
+                listSource = getString(R.string.radioS6);
+                stopPlaying();
+                break;
+            }
+            case 7: {
+                mTitle = getString(R.string.title_section7);
+                ds = getString(R.string.radio7);
+                listSource = getString(R.string.radioS7);
+                stopPlaying();
+                break;
+            }
+            case 8: {
+                mTitle = getString(R.string.title_section8);
+                ds = getString(R.string.radio8);
+                listSource = getString(R.string.radioS8);
+                stopPlaying();
+                break;
+            }
+            case 9: {
+                mTitle = getString(R.string.title_section9);
+                ds = getString(R.string.radio9);
+                listSource = getString(R.string.radioS9);
+                stopPlaying();
+                break;
+            }
         }
     }
 

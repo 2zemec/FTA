@@ -2,16 +2,34 @@
     <string name="app_name">MJoy Radio</string>
 
     <string name="title_section1">RZK</string>
-    <string name="title_section2">Urban space radio</string>
-    <string name="title_section3">Radio greatest song</string>
+    <string name="title_section2">Urban Space Radio</string>
+    <string name="title_section3">Greatest Song Radio</string>
+    <string name="title_section4">Mousse Radio</string>
+    <string name="title_section5">LiveM Radio</string>
+    <string name="title_section6">RadioM</string>
+    <string name="title_section7">Ego Radio</string>
+    <string name="title_section8">Різдвяне Radio</string>
+    <string name="title_section9">Kredens Cafe Radio</string>
 
     <string name="radio1">radio-z-kryjivky</string>
     <string name="radio2">urban-space-radio</string>
     <string name="radio3">radio-great</string>
+    <string name="radio4">radio-mousse</string>
+    <string name="radio5">radio-m-live</string>
+    <string name="radio6">radio-m</string>
+    <string name="radio7">radio-egoisty</string>
+    <string name="radio8">radio-m</string>
+    <string name="radio9">kredens-cafe-radio_mp3</string>
 
     <string name="radioS1">http://mjoy.ua/radio/station/rzk/playlist.json</string>
     <string name="radioS2">http://mjoy.ua/radio/station/urban-space-radio/playlist.json</string>
     <string name="radioS3">http://mjoy.ua/radio/station/radio-great/playlist.json</string>
+    <string name="radioS4">http://mjoy.ua/radio/station/radio-mousse/playlist.json</string>
+    <string name="radioS5">http://mjoy.ua/radio/station/radio-m-live/playlist.json</string>
+    <string name="radioS6">http://mjoy.ua/radio/station/radio-m/playlist.json</string>
+    <string name="radioS7">http://radio.egoisty.com/playlist.json?_=1447678470179</string>
+    <string name="radioS8">http://mjoy.ua/radio/station/radio-m/playlist.json</string>
+    <string name="radioS9">http://mjoy.ua/radio/station/kc-radio/playlist.json</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
