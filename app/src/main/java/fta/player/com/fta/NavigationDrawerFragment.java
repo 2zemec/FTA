@@ -1,8 +1,12 @@
 package fta.player.com.fta;
 
+import android.app.Dialog;
+import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
+import android.provider.AlarmClock;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -16,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,6 +31,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 import fta.player.com.fta.fragments.ChristmasFragment;
 import fta.player.com.fta.fragments.EgoFragment;
@@ -72,6 +79,7 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
+    private AlarmClock AC;
 
     private CharSequence mTitle;
 
@@ -347,10 +355,22 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (item.getItemId() == R.id.action_example) {
             Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+            setAlarmClock();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public int hour_local = 0;
+    public int minute_local = 1;
+
+    private void setAlarmClock()
+    {
+        Intent openNewAlarm = new Intent(AlarmClock.ACTION_SET_ALARM);
+        openNewAlarm.putExtra(AlarmClock.EXTRA_HOUR, hour_local);
+        openNewAlarm.putExtra(AlarmClock.EXTRA_MINUTES, minute_local);
+        startActivity(openNewAlarm);
     }
 
     /**

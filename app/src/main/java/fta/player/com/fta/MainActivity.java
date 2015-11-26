@@ -1,12 +1,19 @@
 package fta.player.com.fta;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.os.Build;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,14 +22,12 @@ import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import fta.player.com.fta.NavigationDrawerFragment;
-import fta.player.com.fta.R;
-import fta.player.com.fta.URLLoader;
 
 
 public class MainActivity extends ActionBarActivity
@@ -31,9 +36,23 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private boolean isPlaying = false;
     private URLLoader urlLoader;
     private Timer timer = new Timer();
-    private String ds = "radio-z-kryjivky";
+    public String ds = "radio-z-kryjivky";
     private String listSource = "http://mjoy.ua/radio/station/rzk/playlist.json";
     public MediaPlayer mp = new MediaPlayer();
+    //private TimePicker alarmTimePicker;
+    public View currentView = null;
+
+    private static MainActivity inst;
+
+    public static MainActivity instance() {
+        return inst;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        inst = this;
+    }
 
     private MediaPlayer.OnPreparedListener onBufComplete = new MediaPlayer.OnPreparedListener() {
         @Override
@@ -191,7 +210,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, AlarmActivity.class);
+            this.startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
@@ -226,10 +246,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.urban_fragment, container, false);
-
-            final TextView trackTitleTxt = (TextView)rootView.findViewById(R.id.trackTitle);
+            final TextView trackTitleTxt = (TextView) rootView.findViewById(R.id.trackTitle);
             trackTitleTxt.setVisibility(View.GONE);
-
             return rootView;
         }
 
@@ -243,44 +261,53 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     public void playStream(View v){
 
-        final TextView trackTitleTxt = (TextView) findViewById(R.id.trackTitle);
-        trackTitleTxt.setVisibility(View.VISIBLE);
-        final Button button = (Button) findViewById(R.id.playBtn);
-        //button.setEnabled(false);
-        if(!isPlaying) {
-            button.setText("Stop");
-            try {
-                mp.setDataSource("http://stream.mjoy.ua:8000/"+ds);
-                mp.prepare();
-                mp.start();
-                isPlaying = true;
-                timer = new Timer();
-                ts = new TimerTask() {
-                    @Override
-                    public void run() {
-                        try{
-                            loadTrackList();
-                        }
-                        catch (IOException e)
-                        {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                timer.schedule(ts, 0, 5000);
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (SecurityException e) {
-                e.printStackTrace();
-            } catch (IllegalStateException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        else
+        final TextView trackTitleTxt;
+        Button button = null;
+        try {
+            trackTitleTxt = (TextView) findViewById(R.id.trackTitle);
+            trackTitleTxt.setVisibility(View.VISIBLE);
+            button = (Button) findViewById(R.id.playBtn);
+        }catch (Exception e)
         {
-            stopPlaying();
+
+        }
+        //button.setEnabled(false);
+
+        try {
+            if(!isPlaying) {
+                button.setText("Stop");
+                    mp.setAudioStreamType(AudioManager.STREAM_ALARM);
+                    mp.setDataSource("http://stream.mjoy.ua:8000/"+ds);
+                    mp.prepare();
+                    mp.start();
+                    isPlaying = true;
+                    timer = new Timer();
+                    ts = new TimerTask() {
+                        @Override
+                        public void run() {
+                            try{
+                                loadTrackList();
+                            }
+                            catch (IOException e)
+                            {
+                                e.printStackTrace();
+                            }
+                        }
+                    };
+                    timer.schedule(ts, 0, 5000);
+            }
+            else
+            {
+                stopPlaying();
+            }
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (SecurityException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -302,5 +329,4 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
         urlLoader = new URLLoader(this);
         urlLoader.execute(listSource);
     }
-
 }
