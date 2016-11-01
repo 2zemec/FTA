@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.WindowManager;
 
 public class AlarmService extends IntentService {
     private NotificationManager alarmNotificationManager;
@@ -21,7 +22,7 @@ public class AlarmService extends IntentService {
 
     @Override
     public void onHandleIntent(Intent intent) {
-        sendNotification("Wake Up! Wake Up!");
+        //sendNotification("Wake Up! Wake Up!");
     }
 
     private void sendNotification(String msg) {
@@ -29,8 +30,9 @@ public class AlarmService extends IntentService {
         alarmNotificationManager = (NotificationManager) this
                 .getSystemService(Context.NOTIFICATION_SERVICE);
 
+
         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, MainActivity.class), 0);
+               new Intent(this, AlarmActivity.class), 0);
 
         NotificationCompat.Builder alamNotificationBuilder = new NotificationCompat.Builder(
                 this).setContentTitle("Alarm").setSmallIcon(R.drawable.ic_drawer)

@@ -1,25 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle" >
-    <corners
-        android:radius="100dp"
-        />
-    <solid
-        android:color="#ffff3710"
-        />
-    <padding
-        android:left="0dp"
-        android:top="0dp"
-        android:right="0dp"
-        android:bottom="0dp"
-        />
-    <size
-        android:width="200dp"
-        android:height="200dp"
-        />
-    <stroke
-        android:width="10dp"
-        android:color="#ffffffff"
-        />
-</shape>
+
+
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<item
+    android:state_checked="true"
+    android:drawable="@drawable/btn_pressed" />
+<item
+    android:state_checked="false"
+    android:drawable="@drawable/btn_normal" />
+</selector>

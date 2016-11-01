@@ -1,6 +1,7 @@
 package fta.player.com.fta;
 
 import android.os.AsyncTask;
+import android.text.Html;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -75,7 +76,7 @@ public class URLLoader extends AsyncTask<String, Void, String> {
             //final TextView artistTxt = (TextView) MA.findViewById(R.id.trackArtist);
             final TextView trackTitleTxt = (TextView) MA.findViewById(R.id.trackTitle);
             //artistTxt
-            trackTitleTxt.setText(jsObj.getString("artist") + "\n"+jsObj.getString("title"));
+            trackTitleTxt.setText(Html.fromHtml("<b><i>"+jsObj.getString("title")+"</i></b><br>"+jsObj.getString("artist")));
             //trackTitleTxt.setText();
         }
         catch (JSONException e)

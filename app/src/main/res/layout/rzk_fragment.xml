@@ -2,14 +2,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_alignParentTop="true"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     style="@style/AppTheme.NoActionBar">
 
-    <Button
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:id="@+id/bgView"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:drawingCacheQuality="high"
+        />
+
+    <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Play"
+        android:button="@android:color/transparent"
         android:id="@+id/playBtn"
         android:onClick="playStream"
         android:background="@drawable/button_rzk_shape"
@@ -17,42 +28,29 @@
         android:shadowDx="0"
         android:shadowDy="0"
         android:shadowRadius="5"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="70dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="76dp" />
+        android:layout_centerVertical="true"
+        android:layout_gravity="center_vertical|center_horizontal"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/trackTitle"
-        android:layout_marginBottom="41dp"
+        android:fontFamily="sans-serif"
         android:textColor="#ffffffff"
-        android:background="@drawable/textview_rzk_shape"
+        android:textAlignment="center"
         android:paddingLeft="5dp"
         android:paddingTop="5dp"
         android:paddingRight="5dp"
         android:paddingBottom="5dp"
         android:padding="5dp"
-        android:textStyle="bold"
-        android:layout_above="@+id/playBtn"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="0dp"
         android:minHeight="30pt"
         android:maxWidth="120pt"
         android:minWidth="120pt"
-        android:maxHeight="30pt" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="RZK"
-        android:id="@+id/radioName"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
-        android:textColor="#ffe82532"
-        android:layout_alignParentBottom="true" />
+        android:maxHeight="30pt"
+        android:layout_below="@+id/playBtn"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>
