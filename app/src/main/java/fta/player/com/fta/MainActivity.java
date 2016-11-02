@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -126,12 +127,22 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
         HeadsetStateReceiver receiver = new HeadsetStateReceiver(this);
         registerReceiver( receiver, receiverFilter );
+
+    }
+
+    public boolean isTablet() {
+        return (getApplicationContext().getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        //setImageCorrection();
+        if(!isTablet())
+        {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
     }
 
     private void setImageCorrection()
