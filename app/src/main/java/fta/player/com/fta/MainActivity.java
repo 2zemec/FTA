@@ -1,9 +1,7 @@
 package fta.player.com.fta;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.media.AudioManager;
@@ -13,8 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,17 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import fta.player.com.fta.core.HeadsetStateReceiver;
-import fta.player.com.fta.core.UserPreferences;
 
 
 public class MainActivity extends ActionBarActivity
@@ -44,16 +34,12 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public String ds = "radio-z-kryjivky";
     private String listSource = "http://mjoy.ua/radio/station/rzk/playlist.json";
     public MediaPlayer mp = new MediaPlayer();
-    //private TimePicker alarmTimePicker;
-    public View currentView = null;
 
     private static MainActivity inst;
 
     public static MainActivity instance() {
         return inst;
     }
-
-    private UserPreferences up;
 
     @Override
     public void onStart() {
@@ -64,8 +50,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     private MediaPlayer.OnPreparedListener onBufComplete = new MediaPlayer.OnPreparedListener() {
         @Override
         public void onPrepared(MediaPlayer mp) {
-            //final Button button = (Button) findViewById(R.id.playBtn);
-            //button.setEnabled(true);
         }
     };
 
@@ -82,22 +66,13 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
         }
     };
 
-    /**
-     * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
-     */
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
-    /**
-     * Used to store the last screen title. For use in {@link #restoreActionBar()}.
-     */
     private CharSequence mTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        up = new UserPreferences(inst);
 
-        //supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -115,19 +90,9 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
         mp.setOnPreparedListener(onBufComplete);
 
         View decorView = getWindow().getDecorView();
-// Hide both the navigation bar and the status bar.
-// SYSTEM_UI_FLAG_FULLSCREEN is only available on Android 4.1 and higher, but as
-// a general rule, you should design your app to hide the status bar whenever you
-// hide the navigation bar.
         int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION;
-               // | View.SYSSYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
-
-        IntentFilter receiverFilter = new IntentFilter(Intent.ACTION_HEADSET_PLUG);
-
-        HeadsetStateReceiver receiver = new HeadsetStateReceiver(this);
-        registerReceiver( receiver, receiverFilter );
-
+        setVolumeControlStream(AudioManager.STREAM_MUSIC);
     }
 
     public boolean isTablet() {
@@ -145,48 +110,10 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
         }
     }
 
-    private void setImageCorrection()
-    {
-        ImageView bgView = (ImageView) findViewById(R.id.bgView);
-        RelativeLayout.LayoutParams layoutParams  = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        layoutParams.setMargins(0,0,0,0);
-        bgView.setLayoutParams(layoutParams);
-    }
-
     @Override
     protected void onStop()
     {
-       // up.savePreferences();
         super.onStop();
-    }
-
-    @Override
-    public boolean onKeyDown(int keycode, KeyEvent e)
-    {
-        switch(keycode) {
-            case KeyEvent.KEYCODE_VOLUME_UP: {
-                if(up.volume != 1.0f)
-                    up.volume += 0.1f;
-                else if(up.volume >= 1.0f)
-                    up.volume = 1.0f;
-                AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int) (up.volume * 10.0 ), AudioManager.FLAG_SHOW_UI);
-                mp.setVolume(up.volume,up.volume);
-                return true;
-            }
-            case KeyEvent.KEYCODE_VOLUME_DOWN: {
-                if(up.volume >= 0.0f)
-                    up.volume -= 0.1f;
-                else
-                    up.volume = 0.0f;
-                AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, (int)(up.volume * 10.0 ), AudioManager.FLAG_SHOW_UI );
-                mp.setVolume(up.volume,up.volume);
-                return true;
-            }
-        }
-
-        return super.onKeyDown(keycode, e);
     }
 
     @Override
@@ -194,7 +121,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
         super.onWindowFocusChanged(hasFocus);
         getWindow().getDecorView().setSystemUiVisibility( View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
-                // View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                 View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
@@ -204,7 +130,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_container, PlaceholderFragment.newInstance(position + 1))
@@ -290,9 +215,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
             getMenuInflater().inflate(R.menu.main, menu);
             restoreActionBar();
             return true;
@@ -302,12 +224,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, AlarmActivity.class);
             this.startActivity(intent);
@@ -340,14 +258,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
             return rootView;
         }
 
-        public void setImageCorrections(View rootView)
-        {
-            ImageView bgView = (ImageView) rootView.findViewById(R.id.bgView);
-            RelativeLayout.LayoutParams layoutParams  = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-            layoutParams.setMargins(0,0,0,0);
-            bgView.setLayoutParams(layoutParams);
-        }
-
         @Override
         public void onAttach(Activity activity) {
             super.onAttach(activity);
@@ -370,7 +280,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
         try {
             if(!isPlaying) {
-                    mp.setAudioStreamType(AudioManager.STREAM_ALARM);
+                    mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
                     mp.setDataSource("http://stream.mjoy.ua:8000/"+ds);
                     mp.prepare();
                     mp.start();
@@ -419,24 +329,5 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     {
         urlLoader = new URLLoader(this);
         urlLoader.execute(listSource);
-    }
-
-    public void setHeadphones(Boolean isIn)
-    {
-        AudioManager audioManager = (AudioManager) getApplicationContext().getSystemService(Context.AUDIO_SERVICE);
-        if(isIn && mp != null && mp.isPlaying()) {
-            mp.reset();
-            mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            audioManager.setMode(AudioManager.MODE_NORMAL);
-            audioManager.setSpeakerphoneOn(false);
-            audioManager.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_EARPIECE, AudioManager.ROUTE_ALL);
-        }
-        else if(!isIn && mp != null && mp.isPlaying()) {
-            mp.pause();
-            audioManager.setMode(AudioManager.MODE_IN_CALL);
-            audioManager.setSpeakerphoneOn(true);
-            audioManager.setRouting(AudioManager.MODE_NORMAL, AudioManager.ROUTE_SPEAKER, AudioManager.ROUTE_ALL);
-            mp.start();
-        }
     }
 }

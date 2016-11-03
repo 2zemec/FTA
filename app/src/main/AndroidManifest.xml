@@ -38,11 +38,6 @@
             android:enabled="true" />
 
         <receiver android:name=".AlarmReceiver" />
-        <receiver android:name="core.HeadsetStateReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.HEADSET_PLUG"/>
-            </intent-filter>
-        </receiver>
 
         <activity android:name=".AlarmActivity" />
     </application>

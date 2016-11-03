@@ -26,9 +26,9 @@ public class HeadsetStateReceiver extends BroadcastReceiver {
         if(intent.getAction().equals(Intent.ACTION_HEADSET_PLUG)){
             int state = intent.getIntExtra("state", 4);
             if(state == 0){
-                MA.setHeadphones(false);
+                //headphones off
             }else if(state == 1){
-                MA.setHeadphones(true);
+                //headphones on
             }else {
             }
         }
