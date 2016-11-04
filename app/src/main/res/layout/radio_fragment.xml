@@ -1,9 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_alignParentTop="true"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    style="@style/AppTheme.NoActionBar"
-    android:background="@android:color/darker_gray">
+    style="@style/AppTheme.NoActionBar">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -24,7 +22,7 @@
         android:button="@android:color/transparent"
         android:id="@+id/playBtn"
         android:onClick="playStream"
-        android:background="@drawable/button_rzk_shape"
+        android:background="@drawable/play_button"
         android:textColor="#ffffff"
         android:shadowDx="0"
         android:shadowDy="0"

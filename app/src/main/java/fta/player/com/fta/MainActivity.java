@@ -20,13 +20,18 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import fta.player.com.fta.utils.ImageFileUtils;
+
 
 public class MainActivity extends ActionBarActivity
 implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    public static String PACKAGE_NAME;
 
     private boolean isPlaying = false;
     private URLLoader urlLoader;
@@ -72,6 +77,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PACKAGE_NAME = getApplicationContext().getPackageName();
+        ImageFileUtils.PATH = getApplicationContext().getFilesDir().getAbsolutePath();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -82,7 +89,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
                 getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -252,7 +258,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.urban_fragment, container, false);
+            View rootView = inflater.inflate(R.layout.radio_fragment, container, false);
             final TextView trackTitleTxt = (TextView) rootView.findViewById(R.id.trackTitle);
             trackTitleTxt.setVisibility(View.GONE);
             return rootView;
@@ -276,7 +282,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
         {
 
         }
-        //button.setEnabled(false);
 
         try {
             if(!isPlaying) {

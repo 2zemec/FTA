@@ -9,15 +9,16 @@ import android.widget.RelativeLayout;
 import java.io.InputStream;
 
 import fta.player.com.fta.MainActivity;
+import fta.player.com.fta.fragments.IRadioFragment;
 
 /**
  * Created by Taras on 14.04.2015.
  */
 public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-    ImageView bmImage;
+    IRadioFragment radioFragment;
 
-    public DownloadImageTask(ImageView bmImage) {
-        this.bmImage = bmImage;
+    public DownloadImageTask(IRadioFragment radioFragment) {
+        this.radioFragment = radioFragment;
     }
 
     protected Bitmap doInBackground(String... urls) {
@@ -33,9 +34,6 @@ public class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
     }
 
     protected void onPostExecute(Bitmap result) {
-        bmImage.setImageBitmap(result);
-        RelativeLayout.LayoutParams layoutParams  = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        layoutParams.setMargins(0,0,0,0);
-        bmImage.setLayoutParams(layoutParams);
+        radioFragment.processLoadedImage(result);
     }
 }
