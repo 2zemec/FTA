@@ -1,6 +1,7 @@
 package fta.player.com.fta;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -20,13 +21,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import fta.player.com.fta.utils.ImageFileUtils;
-
 
 public class MainActivity extends ActionBarActivity
 implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -41,6 +38,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     public MediaPlayer mp = new MediaPlayer();
 
     private static MainActivity inst;
+    public static Context appContext;
 
     public static MainActivity instance() {
         return inst;
@@ -77,8 +75,8 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        appContext = getApplicationContext();
         PACKAGE_NAME = getApplicationContext().getPackageName();
-        ImageFileUtils.PATH = getApplicationContext().getFilesDir().getAbsolutePath();
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);

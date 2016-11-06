@@ -1,10 +1,13 @@
 package fta.player.com.fta.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import fta.player.com.fta.MainActivity;
 
 
 /**
@@ -13,7 +16,10 @@ import java.io.IOException;
 
 public class ImageFileUtils {
 
-    public static  String PATH = "";
+    public static Context getContext()
+    {
+        return MainActivity.appContext;
+    }
     public static void saveImage(Bitmap bitmap, String imageName)
     {
         if(!isImageExist(imageName))
@@ -21,7 +27,7 @@ public class ImageFileUtils {
             FileOutputStream outputStream = null;
 
             try {
-                outputStream = new FileOutputStream(new File(getImagePath(imageName)));
+                outputStream = getContext().openFileOutput(imageName, Context.MODE_PRIVATE);
                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -40,19 +46,12 @@ public class ImageFileUtils {
 
     public static boolean isImageExist(String imageName)
     {
-        return false;
-//        File f = new File(getImagePath(imageName));
-//        return f.exists();
+        File f = new File(getImagePath(imageName));
+        return f.exists();
     }
 
     public static String getImagePath(String imageName)
     {
-        String path = PATH+File.separator+imageName;
-        File dir = new File(PATH);
-        if(!dir.exists()) {
-            dir.mkdir();
-        }
-
-        return path;
+        return getContext().getFilesDir().getPath()+File.separator+imageName;
     }
 }
